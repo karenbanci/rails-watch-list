@@ -1,0 +1,12 @@
+<div class="conteiner">
+
+<h1>Add a new bookmark <%= bookmark.name %></h1>
+
+<% simple_form_for [@list, @bookmark] do |bookmark| %>
+  <%= bookmark.input :coment %>
+  <%= bookmark.submit 'Add bookmark', link_to list_path(@list, @bookmark) %>
+<% end %>
+
+  <%= link_to "delete", list_path(@list), method: :delete, data: { confirm: "Are you sure?" } %>
+
+</div>
