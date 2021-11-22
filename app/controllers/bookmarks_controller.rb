@@ -10,6 +10,7 @@ class BookmarksController < ApplicationController
     @bookmark = Bookmark.new(bookmarks_params)
     # aqui estou pegando o list_id, passando um objeto list para dentro do bookmark
     @bookmark.list = @list
+    # raise
     if @bookmark.save
       redirect_to list_path(@list), notice: 'Bookmarks was successfully created'
     else

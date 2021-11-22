@@ -2,6 +2,20 @@
 
   <h1><%= @list.name %></h1>
 
-  <%= link_to 'back to home', lists_path %>
-  <%= link_to 'add a bookmark', list_bookmarks_path(@list) %>
+  <%= link_to 'add a movie', new_list_bookmark_path(@list) %>
+  <%= link_to "detete this list", list_path(@list), method: :delete, data: { confirm: "Are you sure you want to delete this list?" } %>
+  <%= link_to 'back to home', lists_path(@list) %>
+  <ul>
+    <% @list.movies.each do |movie| %></ul>
+      <% bookmark = Bookmark.find_by(list: @list, movie: movie)  %>
+      <li style="list-style: none;"><%= movie.title %>  <%= movie.rating %></li>
+      <li style="list-style: none;"><%= image_tag movie.poster_url, alt: movie.title, class: "movie-img rounded-top" %></li>
+      <li style="list-style: none;"><%= movie.overview %></li>
+      <p>Bookmark</p>
+      <%= bookmark.comment %>
+      <%= link_to 'delete', bookmark_path(bookmark), method: :delete, data: { confirm: "Are you sure?" } %>
+    <% end %>
+  </ul>
+
+
 </div>
