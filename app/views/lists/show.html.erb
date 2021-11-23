@@ -1,21 +1,34 @@
-<div class="container">
+<div class="container position-relative">
+  <h1 class="my-4"><%= @list.name %></h1>
 
-  <h1><%= @list.name %></h1>
+  <div class="button d-flex mb-4">
+    <%= link_to 'add a movie', new_list_bookmark_path(@list), class: "btn btn-light mx-2" %>
+    <%= link_to "detete this list", list_path(@list), method: :delete, data: { confirm: "Are you sure you want to delete this list?" }, class: "btn btn-light mx-2" %>
+    <%= link_to 'back to home', lists_path(@list), class: "btn btn-light mx-2" %>
+  </div>
 
-  <%= link_to 'add a movie', new_list_bookmark_path(@list) %>
-  <%= link_to "detete this list", list_path(@list), method: :delete, data: { confirm: "Are you sure you want to delete this list?" } %>
-  <%= link_to 'back to home', lists_path(@list) %>
-  <ul>
-    <% @list.movies.each do |movie| %></ul>
-      <% bookmark = Bookmark.find_by(list: @list, movie: movie)  %>
-      <li style="list-style: none;"><%= movie.title %>  <%= movie.rating %></li>
-      <li style="list-style: none;"><%= image_tag movie.poster_url, alt: movie.title, class: "movie-img rounded-top" %></li>
-      <li style="list-style: none;"><%= movie.overview %></li>
-      <p>Bookmark</p>
-      <%= bookmark.comment %>
-      <%= link_to 'delete', bookmark_path(bookmark), method: :delete, data: { confirm: "Are you sure?" } %>
-    <% end %>
-  </ul>
+  <div class="cards d-flex justify-content-around">
+      <% @list.movies.each do |movie| %>
 
+        <div class="card" style="width: 18rem;">
+          <% bookmark = Bookmark.find_by(list: @list, movie: movie)  %>
+          <%= movie.title %>  <%= movie.rating %>
+          <%= image_tag movie.poster_url, alt: movie.title, class: "card-img-top px-2" %>
 
+          <div class="text-dark p-3">
+            <h3 class="fs-5">Overview:</h3><%= movie.overview %>
+          </div>
+
+          <div class="card-body text-black-50">
+            <%= bookmark.comment %>
+
+            <div class="d-flex justify-content-end">
+              <%= link_to '', bookmark_path(bookmark), method: :delete, data: { confirm: "Are you sure?" }, class: "fas fa-trash-alt text-dark" %>
+            </div>
+
+          </div>
+
+        </div>
+      <% end %>
+    </div>
 </div>
